@@ -18,6 +18,7 @@
         placeholder="Rayon"
       />
     </form>
+    <br>
   </div>
   <br />
   <table>
@@ -47,6 +48,9 @@ const rayon = ref("");
 
 function onInput(e) {
   rayon.value = e.target.value;
+
+rayon = Math.abs(Math.floor(rayon))
+
 }
 
 //__________ test avec pinia marche pas encore __________
