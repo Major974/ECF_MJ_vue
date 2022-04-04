@@ -1,20 +1,13 @@
 import { defineStore } from "pinia";
 
-export const useBateauxStore = defineStore({
-  id: "bateaux",
+export const useAireStore = defineStore({
+  id: "cercle",
   state: () => ({
-    nomPropriétaire: "",
-    nomBateaux: "",
-    taille: 0,
-    prix: 0,
+    rayon: 0,
   }),
   getters: {
-    getNom: (state) => state.nomPropriétaire,
-    getNomBat: (state) => state.nomBateaux,
-    getTaille: (state) => state.taille,
-    getPrix: (state) => state.prix,
+    getNom: (state) => state.rayon,
   },
-  actions: {
-  },
-  persist: true
+  actions: {},
+  persist: true,
 });

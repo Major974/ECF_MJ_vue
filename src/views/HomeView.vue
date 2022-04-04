@@ -1,84 +1,87 @@
 <template>
   <div>
-    <button @click="Bat">"rerere"</button>
-
+    <h1>Calculateur de dimensions d’un cercle</h1>
+    <p>
+      Cette application sert à calculer le périmetre, l'Aire et le volume
+      sphérique d'un cercle grace un son rayon. Le rayon doit etre un chiffre
+      entier ( sait a dire sans( , ) ) et doit etre une valeur possitive ( sait
+      a dire sans ( - ) avant la valeur ) tous sa en Centimétre.
+    </p>
+    <br />
     <form @submit.prevent="handleSubmit">
-      <p>nom du propriétaire</p>
+      <p>Rayon du cercle en Cm</p>
       <input
-        v-model="Bateaux.nomPropriétaire"
-        type="text"
-        name="nomPropriétaire"
-        placeholder="nom du propriétaire"
-      />
-      <br /><br />
-      <p>nom du bateaux</p>
-      <input
-        v-model="Bateaux.nomBateaux"
-        type="text"
-        name="nomBateaux"
-        placeholder="nom du bateaux"
-      />
-      <br /><br />
-      <p>taille du dit bateaux en métre</p>
-      <input
-        v-model="Bateaux.taille"
-        type="number"
-        min="270"
-        max="36200"
-        name="taille"
-        placeholder="taille du dit bateaux en métre"
-      />
-      <br /><br />
-      <p>prix du dit bateaux en euros</p>
-      <input
-        v-model="Bateaux.prix"
         type="number"
         min="1"
-        max="460000000"
-        name="prix"
-        placeholder="prix du dit bateaux en euros"
+        :value="rayon"
+        @input="onInput"
+        placeholder="Rayon"
       />
-      <br /><br /><br />
-      <input type="submit" value="mettre en location" />
     </form>
   </div>
+  <br />
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Périmètre du cercle</th>
+        <th scope="col">Aire du cercle</th>
+        <th scope="col">Volume de la sphère</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!-- Arrondi de pi = PI = π = Math.PI = 3.1415 -->
+        <td>{{ rayon * 2 * 3.1415 }} Cm</td>
+        <td>{{ 3.1415 * rayon * rayon }} Cm²</td>
+        <td>{{ (4 * 3.1415 * (rayon * 3)) / 3 }} Cm³</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
-
 <script setup>
-import {useBateauxStore} from "../stores/counter"
-const StoreStoreStore = useBateauxStore();
+//__________ sans pinia sa marche __________
 
-let Bateaux = {
-  nomPropriétaire: "",
-  nomBateaux: "",
-  taille: 0,
-  prix: 0,
-};
+import { ref } from "vue";
+const rayon = ref("");
 
-function Bat() {
-  console.log("top");
-  console.log(Bateaux);
+function onInput(e) {
+  rayon.value = e.target.value;
 }
+
+//__________ test avec pinia marche pas encore __________
+
+import { useAireStore } from "../stores/counter";
+const StoreStore = useAireStore();
+
+let cercle = {
+  rayon: 0,
+};
 
 function handleSubmit() {
   console.log("handleSubmit");
 
-  if (Bateaux.nomPropriétaire == 0 || Bateaux.nomBateaux == 0 || Bateaux.taille == 0 || Bateaux.prix == 0){
-    console.log("connard");
-    console.log(Bateaux);
-    return
+  if (cercle.rayon == 0) {
+    console.log("rien");
+    console.log(cercle);
+    return;
   }
-  Bateaux.prix = Math.abs(Math.floor(Bateaux.prix))
-  Bateaux.taille = Math.abs(Math.floor(Bateaux.taille))
+  cercle.rayon = Math.abs(Math.floor(cercle.rayon));
 
-  // Bateaux.prix = (Bateaux.prix / 12)
-
-  StoreStoreStore.nomPropriétaire
-  StoreStoreStore.nomBateaux
-  StoreStoreStore.taille
-  StoreStoreStore.prix
-  console.log(StoreStoreStore)
+  StoreStore.rayon;
+  console.log(StoreStore);
 }
 </script>
 
+<style scoped>
+table {
+  border-collapse: collapse;
+  width: 400px;
+}
+th,
+td {
+  border: 1px solid grey;
+  padding: 10px;
+  vertical-align: top;
+}
+</style>
